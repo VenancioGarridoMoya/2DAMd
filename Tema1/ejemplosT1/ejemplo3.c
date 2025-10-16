@@ -15,6 +15,7 @@ int main() {
         }
         printf("El factorial de %d es %llu\n", n, factorial);
     }
+    printf("Fin del programa.\n");
 
     return 0;
 }
