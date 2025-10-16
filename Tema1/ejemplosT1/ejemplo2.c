@@ -9,6 +9,7 @@ int main() {
     fgets(cadena, MAX_LEN, stdin);
 
     printf("La cadena introducida es: %s", cadena);
+    printf("Fin del programa.\n");
 
     return 0;
 }
