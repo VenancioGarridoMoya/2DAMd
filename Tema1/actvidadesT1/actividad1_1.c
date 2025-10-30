@@ -21,7 +21,7 @@ int main(){
          caracter=getchar();
          break;
     default: //estoy en el proceso padre (el valor es el de el pid del hijo)
-        printf("Espero a que termine mi hijo.\n");
+        printf("Soy el proceso padre con pid %d - Espero a que termine mi hijo.\n", getpid());
         pidHijo= wait(NULL);
         printf("Soy el proceso padre con pid %d,la variable vale %d", getpid(), numero);
         printf("\n\t la incremento en 5, ahora tiene elvalor de: %d\n ", numero+=5);
