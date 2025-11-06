@@ -1,4 +1,4 @@
-include <stdio.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -6,7 +6,7 @@ include <stdio.h>
 
 int main(){
     int fd[2];
-    char buffer[30];//aqui guardaremos el mensaje que lee el padre
+    char buffer[50];//aqui guardaremos el mensaje que lee el padre
     pid_t pid;//guardaremos el id del proceso hijo
     int salida;
     char quienSoy[15];
