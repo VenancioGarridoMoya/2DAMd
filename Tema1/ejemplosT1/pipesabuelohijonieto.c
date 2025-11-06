@@ -11,6 +11,7 @@ int main(){
     char saludoAbuelo[]="Saludos del Abuelo...\n"; 
     char saludoHijo[]="Saludos del Hijo...\n";
     char saludoNieto[]="Saludos del Nieto...\n";
+    char quienSoy[15];
     
     char buffer[50];
     int fd1[2];
@@ -34,6 +35,7 @@ int main(){
                 break;
             case 0: // estoy en el proceso Nieto
                 //Nieto recibe
+                strcpy(quienSoy,"Nieto");
                 close(fd2[1]); //  nieto va a leer
                 read(fd2[0], buffer, sizeof(buffer));
                 printf("\t\tEl NIETO recibe mensaje del HIJO (su padre): %s\n", buffer);
@@ -44,6 +46,7 @@ int main(){
                 break;
             default: //estoy en el proceso Hijo)
                 //Hijo recibe
+                strcpy(quienSoy,"Hijo");
                 close(fd1[1]); //  Hijo va a leer del Abuelo
                 read(fd1[0], buffer, sizeof(buffer));
                 printf("\tEl Hijo recibe mensaje del Abuelo: %s\n", buffer);
@@ -66,6 +69,7 @@ int main(){
         break;
     default: //estoy en el proceso abuelo (el valor es el de el pid del hijo)
         //Abuelo envía
+        strcpy(quienSoy,"Abuelo");
         printf("ABUELO envía mensaje al HIJO....\n");
         close(fd1[0]); // cierra el descriptor de s/ ya que no va a leer
         write(fd1[1],saludoAbuelo,strlen(saludoAbuelo));
@@ -76,6 +80,6 @@ int main(){
         printf("El ABUELO recibe mensaje del HIJO: %s\n", buffer);
         break;
     }
-    printf("Termina el proceso %d\n", getpid());
+    printf("Termina el proceso con pid %d (%s)\n", getpid(), quienSoy);
     return(salida);
 }
