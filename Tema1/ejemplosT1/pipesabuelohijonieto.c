@@ -21,11 +21,11 @@ int main(){
 
     pidProceso1 = fork(); //Abuelo va a crear el Hijo
     switch(pidProceso1) {
-    case -1:
+       case -1:
         printf("Error, no se pudo crear el proceso Hijo");
         salida=-1;
         break;
-    case 0: // estoy en el proceso hijo
+      case 0: // estoy en el proceso hijo
 //************* */
         pidProceso2 = fork(); //Hijo va a crear el Nieto
         switch(pidProceso2) {
