@@ -9,8 +9,8 @@ int main(){
     char quienSoy[15];
     int salida=0;
     char caracter=0;
-    pid1 = fork();
     
+    pid1 = fork();
     switch (pid1) {
     case -1:
         printf("Error, no se pudo crear el proceso Hijo");
