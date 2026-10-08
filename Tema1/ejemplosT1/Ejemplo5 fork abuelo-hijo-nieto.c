@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
+#include <string.h>
 int main(){
     __pid_t pid1,pid2,pidProcesoAbuelo,pidHijo,pidNieto;
     char quienSoy[15];
@@ -27,15 +28,16 @@ int main(){
                 strcpy(quienSoy,"nieto");
                 printf("Soy el proceso nieto\n \t Mi PID  es %d, y el PID de mi padre es %d.",
                 getpid(), getppid());
-                printf("\nPulsa intro para continuar: ");
-                caracter=getchar();
+                //printf("\nPulsa intro para continuar: ");
+                //caracter=getchar();
+                system("pstree -p | grep \"abuelo\"");
                 break;
             default: //estoy en el hijo....
                 strcpy(quienSoy,"hijo");
                 pidNieto = wait(NULL);
                 printf("Soy el proceso hijo\n \t Mi PID  es %d, y el PID de mi padre es %d.",
                 getpid(), getppid());
-                 break;
+                break;
         }
         break;
     default: //estoy en el proceso Abuelo (el valor es el de el pid del hijo)
