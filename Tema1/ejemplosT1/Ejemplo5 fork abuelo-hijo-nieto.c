@@ -1,4 +1,4 @@
-// comando linux para ver los procesos: pstree -c | grep fork
+// comando linux para ver los procesos: pstree -c | grep abuelo
 
 #include <stdlib.h>
 #include <unistd.h>
