@@ -14,7 +14,10 @@ void main(){
         if (pid ==0){ //estoy en el proceso hijo
             printf("Soy el proceso hijo: \n\t mi pid es %d, el pid de mi padre es %d.\n",
             getpid(), getppid());
-        } else { //esty en el proceso padre
+            //printf("Soy el proceso hijo, pulsa tecla para continuar...");
+            //getchar();
+            system("pstree -p | grep \"ejemplo\"");
+        } else { //estoy en el proceso padre
             pidHijo = wait(NULL);
             printf("Soy el proceso padre:\n\t  mi pid es %d, el pid de mi padre es %d.",
             getpid(), getppid());

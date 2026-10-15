@@ -9,11 +9,9 @@ int main(){
     char buffer[30];//aqui guardaremos el mensaje que lee el padre
     pid_t pid;//guardaremos el id del proceso hijo
     int salida;
+    char cadena[]="Hola papi....\n";
     char quienSoy[15];
-
-
     pipe(fd); //creamos el pipe
-
     pid = fork();
 
     switch (pid){
@@ -24,14 +22,14 @@ int main(){
         case 0: // Proceso hijo
             strcpy(quienSoy,"Hijo");
             printf("El proceso HIJO escribe en la tubería...\n"); //mensaje qu escribe el hijo en el pipe
-            write(fd[1], "Hola papi", 10);
+            write(fd[1], cadena, strlen(cadena));
             salida=1;
             break;
         default:
             strcpy(quienSoy,"Padre");
             wait(NULL); //el padre espera a que termine el hijo
             printf("El proceso PADRE lee de la tubería...\n");
-            read(fd[0], buffer, 10);
+            read(fd[0], buffer, strlen(cadena));
             printf("\nEl mensaje es: %s\n", buffer); //el padre lee lo que el hijo ha escrito
             salida=1;
             break;
