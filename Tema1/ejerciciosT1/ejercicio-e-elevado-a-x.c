@@ -58,7 +58,7 @@ int main(void) {
 					close(fd[1]);
 					fflush(stdout);
 					break;;
-				default: {  // Proceso padre
+				default:   // Proceso padre
 					close(fd[1]);
 					fd[1] = -1;
                     double potencia = 1.0;
@@ -67,11 +67,10 @@ int main(void) {
                         read(fd[0], &valor_factorial, sizeof(valor_factorial));
                         double parcial = potencia / valor_factorial;
                         suma += parcial;
-                        printf("Proceso padre: x^%d/%d! = %.10f; Suma parcial = %.10Lf\n",
-                                n, n, parcial, suma);
+                        printf("Proceso padre: %d^%d/%d! = %.10f; Suma parcial = %.10Lf\n",
+                                x, n, n, parcial, suma);
                         potencia *= x;
                     }
-					}
 					close(fd[0]);
 					fd[0] = -1;
 					wait(NULL); // Espera a que el proceso hijo termine
