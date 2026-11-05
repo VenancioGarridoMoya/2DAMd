@@ -57,11 +57,10 @@ int main(void) {
 					}
 					close(fd[1]);
 					fflush(stdout);
-					break;;
+					break;
 				default:   // Proceso padre
 					close(fd[1]);
-					fd[1] = -1;
-                    double potencia = 1.0;
+					double potencia = 1.0;
                     for (int n = 0; n <= limite; n++) {
                         double valor_factorial = 0.0;
                         read(fd[0], &valor_factorial, sizeof(valor_factorial));
@@ -72,7 +71,6 @@ int main(void) {
                         potencia *= x;
                     }
 					close(fd[0]);
-					fd[0] = -1;
 					wait(NULL); // Espera a que el proceso hijo termine
 					printf("e^%d aproximado con N=%d: %.10Lf\n", x, limite, suma);
 					printf("e^%d con exp(): %.10f\n", x, exp((double) x));
