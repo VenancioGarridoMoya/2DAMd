@@ -16,7 +16,7 @@ int main(int argc, char *argv[]){
     salida = -1;
   } else {
         //leemos de la pipe
-        printf("Voy a leer de la pipe de modo permanente.\n\t");
+        printf("Voy a leer de la pipe de modo permanente, estaré a la espera de  lecturas forma infinita.\n\n\t");
         while (1){
             fp = open(nombreArchivo, 0);
             while (((nBytesLeidos = read(fp, buffer, 1))) > 0){
