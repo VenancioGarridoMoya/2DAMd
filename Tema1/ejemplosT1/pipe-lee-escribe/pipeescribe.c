@@ -12,10 +12,9 @@ int main(){
     int fp;
     const char *nombreArchivo = "FIFO2";
     char *mensaje = "\n\t\t***Este mensaje se envió desde pipeescribe***\n";
-    struct stat buffer;
+    struct stat estructura;
     printf("pipeescribe con PID: %d.\n", getpid());
-    //FILE *archivo = fopen(nombreArchivo, "r"); // para comprobar si el archivo existe (podría ser un archivo normal))
-    if (stat(nombreArchivo, &buffer) == -1) { // para comprobar si el archivo existe (podría ser un archivo normal))
+    if (stat(nombreArchivo, &estructura) == -1) { // para comprobar si el archivo existe (podría ser un archivo normal))
         printf("La pipe '%s'  NO existe, voy a crearla.\n", nombreArchivo);
         if ((mkfifo ("FIFO2",S_IFIFO|0666)==-1)){
            salida=-1;
@@ -23,7 +22,12 @@ int main(){
             printf("La pipe '%s' se ha creado con éxito.\n", nombreArchivo);
         }
     } else {
-        printf("La pipe '%s' ya existe.\n", nombreArchivo);
+        if (!S_ISFIFO(estructura.st_mode)) {
+            printf("Error: '%s' existe pero no es una pipe.\n", nombreArchivo);
+            salida=-1;
+        } else{
+            printf("La pipe '%s' ya existe.\n", nombreArchivo);
+        }
     }
     if (salida==0){
         fp = open(nombreArchivo,1); // se bloquea hasta que otro proceso abra la pipe para lectura
