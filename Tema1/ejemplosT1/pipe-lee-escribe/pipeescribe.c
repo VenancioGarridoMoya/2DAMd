@@ -5,14 +5,17 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 int main(){
     int salida=0;
     int fp;
     const char *nombreArchivo = "FIFO2";
     char *mensaje = "\n\t\t***Este mensaje se envió desde pipeescribe***\n";
-
-    FILE *archivo = fopen(nombreArchivo, "r"); // para comprobar si el archivo existe (podría ser un archivo normal))
-    if (archivo == NULL) {
+    struct stat buffer;
+    printf("pipeescribe con PID: %d.\n", getpid());
+    //FILE *archivo = fopen(nombreArchivo, "r"); // para comprobar si el archivo existe (podría ser un archivo normal))
+    if (stat(nombreArchivo, &buffer) == -1) { // para comprobar si el archivo existe (podría ser un archivo normal))
         printf("La pipe '%s'  NO existe, voy a crearla.\n", nombreArchivo);
         if ((mkfifo ("FIFO2",S_IFIFO|0666)==-1)){
            salida=-1;
@@ -20,20 +23,21 @@ int main(){
             printf("La pipe '%s' se ha creado con éxito.\n", nombreArchivo);
         }
     } else {
-        printf("La pipe '%s' existe.\n", nombreArchivo);
-        fclose(archivo); // Cierra el archivo si se abrió correctamente
+        printf("La pipe '%s' ya existe.\n", nombreArchivo);
     }
     if (salida==0){
-        fp = open(nombreArchivo,1);
+        fp = open(nombreArchivo,1); // se bloquea hasta que otro proceso abra la pipe para lectura
          if (fp ==-1){
             printf("Error al abrir la pipe pipe '%s' para escritura.\n", nombreArchivo);
             salida=-1;
+        }else {
+            printf("Se escriben datos en la pipe....\n");
+            write(fp,mensaje, strlen(mensaje));
+            close (fp);
+            printf("Datos escritos en la pipe '%s' con éxito.\n", nombreArchivo);
         }
-        printf("Se mandan datos a la pipe....\n");
-        write(fp,mensaje, strlen(mensaje));
-        close (fp);
-        printf("Datos enviados a la pipe '%s' con éxito.\n", nombreArchivo);
     }
+    printf("\nFin del programa pipeescribe......\n");
     return salida;
     
 }
