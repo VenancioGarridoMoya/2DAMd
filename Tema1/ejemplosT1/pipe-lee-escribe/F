@@ -1,0 +1,8 @@
+total 44
+-rw-rw-r-- 1 usuario usuario     0 Nov 12 13:30 F
+prw-rw-r-- 1 usuario usuario     0 Nov 12 13:26 FIFO2
+-rwxrwxr-x 1 usuario usuario 16208 Oct  1 14:25 pipeescribe
+-rw-rw-r-- 1 usuario usuario  1054 Oct  1 14:25 pipeescribe.c
+-rw-rw-r-- 1 usuario usuario  1426 Oct  1 14:25 pipeescribe.c++
+-rwxrwxr-x 1 usuario usuario 16136 Oct  1 14:25 pipelee
+-rw-rw-r-- 1 usuario usuario   907 Oct  1 14:25 pipelee.c

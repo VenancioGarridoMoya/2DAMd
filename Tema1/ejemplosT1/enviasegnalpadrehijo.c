@@ -6,10 +6,10 @@
 // Manejador de señal
 
 void funcionManejadorHijo(int segnal){
-    printf(" Soy el Hijo, recibo %d\n", segnal);
+    printf("\t\t Soy el Hijo, recibo %d\n", segnal);
 }
 void funcionManejadorPadre(int segnal){
-    printf(" Soy el Padre, recibo %d\n", segnal);
+    printf("\t Soy el Padre, recibo %d\n", segnal);
 }
 int main(){
     const int ITERACIONES= 5;
@@ -25,25 +25,25 @@ int main(){
         salida=-1;
         break;
     case 0: // estoy en el proceso hijo
-        printf("Soy el proceso hijo con pid %d\n", getpid());
+        printf("\t\tSoy el proceso hijo con pid %d\n", getpid());
         signal(SIGUSR1, funcionManejadorHijo);
-        printf(" Se ha asignado la función funcionManejadorHijo a la señal SIGUSR1\n");
+        printf("\t\tSe ha asignado la función funcionManejadorHijo a la señal SIGUSR1\n");
         for (int i=1; i<=ITERACIONES;i++){
             sleep(1);
-            printf("\tHijo %d",i);
+            printf("\t\tHijo %d",i);
             kill (getppid(), SIGUSR1);
             pause();
         }; 
         break;
     default: //estoy en el proceso padre (el valor es el de el pid del hijo)
-        printf("Soy el proceso padre %d\n",getpid());
+        printf("\tSoy el proceso padre %d\n",getpid());
         int i=1;
-        printf("\t\tPadre %d",i);
+        printf("\tPadre %d",i);
         signal(SIGUSR1, funcionManejadorPadre);
-        printf(" Se ha asignado la función funcionManejadorPadre a la señal SIGUSR1\n");
+        printf("\t Se ha asignado la función funcionManejadorPadre a la señal SIGUSR1\n");
         for (i++;i<=ITERACIONES;i++){
             pause();
-            printf("\t\tPadre %d",i);
+            printf("\tPadre %d",i);
             sleep(1);
             kill (pidProceso, SIGUSR1);
         }; 

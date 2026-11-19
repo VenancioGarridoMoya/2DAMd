@@ -2,6 +2,7 @@
 #include <fcntl.h>      /* Modos de apertura y función open()*/
 #include <stdlib.h>
 #include <stdio.h> 
+#include <unistd.h>
  
 int main(int argc, char *argv[]){
  
@@ -9,6 +10,7 @@ int main(int argc, char *argv[]){
   int fp, nBytesLeidos, salida;
   char buffer[10];
   const char *nombreArchivo = "FIFO2";
+  printf("Pipelee PID: %d\n",getpid());
   
   fp = open(nombreArchivo, 0);
   if (fp==-1){

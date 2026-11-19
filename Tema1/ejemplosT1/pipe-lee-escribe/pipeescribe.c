@@ -27,9 +27,10 @@ int main(){
          if (fp ==-1){
             printf("Error al abrir la pipe pipe '%s'.\n", nombreArchivo);
             salida=-1;
+        } else{
+            printf("Mando datos a la pipe....");
+            write(fp,mensaje, strlen(mensaje));
         }
-        printf("Mando datos a la pipe....");
-        write(fp,mensaje, strlen(mensaje));
     }
     return salida;
     
