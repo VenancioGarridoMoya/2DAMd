@@ -4,14 +4,17 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 int main(){
     int salida=0;
     int fp;
     const char *nombreArchivo = "FIFO2";
-    char *mensaje = "Este mensaje se envió desde pipeescribe\n";
-
-    FILE *archivo = fopen(nombreArchivo, "r");
-    if (archivo == NULL) {
+    char *mensaje = "\n\t\t***Este mensaje se envió desde pipeescribe***\n";
+    struct stat estructura;
+    printf("pipeescribe con PID: %d.\n", getpid());
+    if (stat(nombreArchivo, &estructura) == -1) { // para comprobar si el archivo existe (podría ser un archivo normal))
         printf("La pipe '%s'  NO existe, voy a crearla.\n", nombreArchivo);
         if ((mkfifo ("FIFO2",S_IFIFO|0666)==-1)){
            salida=-1;
@@ -19,19 +22,26 @@ int main(){
             printf("La pipe '%s' se ha creado con éxito.\n", nombreArchivo);
         }
     } else {
-        printf("La pipe '%s' existe.\n", nombreArchivo);
-        fclose(archivo); // Cierra el archivo si se abrió correctamente
-    }
-    if (salida==0){
-        fp = open(nombreArchivo,1);
-         if (fp ==-1){
-            printf("Error al abrir la pipe pipe '%s'.\n", nombreArchivo);
+        if (!S_ISFIFO(estructura.st_mode)) {
+            printf("Error: '%s' existe pero no es una pipe.\n", nombreArchivo);
             salida=-1;
         } else{
-            printf("Mando datos a la pipe....");
-            write(fp,mensaje, strlen(mensaje));
+            printf("La pipe '%s' ya existe.\n", nombreArchivo);
         }
     }
+    if (salida==0){
+        fp = open(nombreArchivo,1); // se bloquea hasta que otro proceso abra la pipe para lectura
+         if (fp ==-1){
+            printf("Error al abrir la pipe pipe '%s' para escritura.\n", nombreArchivo);
+            salida=-1;
+        }else {
+            printf("Se escriben datos en la pipe....\n");
+            write(fp,mensaje, strlen(mensaje));
+            close (fp);
+            printf("Datos escritos en la pipe '%s' con éxito.\n", nombreArchivo);
+        }
+    }
+    printf("\nFin del programa pipeescribe......\n");
     return salida;
     
 }
